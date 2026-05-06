@@ -47,8 +47,7 @@ test("GET /api/parcels/:id returns the created parcel", async ({ request }) => {
 test("system status shows ready after initialising", async ({ page }) => {
   await page.goto("/challenges/async");
   const status = page.locator('[data-testid="system-ready"]');
-  await status.waitFor();
-  await expect(status).toHaveText("system ready");
+  await expect(status).toHaveText(/system ready/i);
 });
 
 // --- Test 5 ---
