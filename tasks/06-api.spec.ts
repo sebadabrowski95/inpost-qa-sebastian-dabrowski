@@ -181,4 +181,61 @@ test.describe('PATCH /api/parcels - Full Lifecycle', () => {
       });
     })
 
+
+    test.describe('Positive scenarios for PATCH /api/parcels/:id', () => {
+      test('should update only phoneNumber (200)', async ({ request }) => {
+        const newPhone = "+48 123 456 789";
+        const response = await request.patch(`${BASE_URL}/${parcelId}`, {
+          headers: AUTH_HEADER,
+          data: { phoneNumber: newPhone },
+        });
+
+        expect(response.status()).toBe(200);
+        const body = await response.json();
+        expect(body.phoneNumber).toBe(newPhone);
+      });
+    })
+
+    test.describe('Negative scenarios for PATCH /api/parcels/:id', () => {
+
+      test('should return 400 when validation fails or no fields provided', async ({ request }) => {
+        const response = await request.patch(`${BASE_URL}/${parcelId}`, {
+          headers: AUTH_HEADER,
+          data: { lockerCode: '' },
+        });
+
+        expect(response.status()).toBe(400);
+        expect(await response.json()).toEqual({ 
+          error: 'lockerCode is required when deliveryType is LOCKER' 
+        });
+      });
+
+      test('should return 401 when no auth header is provided', async ({ request }) => {
+        const response = await request.patch(`${BASE_URL}/${parcelId}`, {
+          data: { deliveryType: 'LOCKER' },
+        });
+
+        expect(response.status()).toBe(401);
+        expect(await response.json()).toEqual({ 
+          error: 'Unauthorized' 
+        });
+      });
+
+
+      test('should return 404 when parcel ID is invalid', async ({ request }) => {
+        const response = await request.patch(`${BASE_URL}/wrongID`, {
+          headers: AUTH_HEADER,
+          data: { deliveryType: 'LOCKER' },
+        });
+
+        expect(response.status()).toBe(404);
+        expect(await response.json()).toEqual({ 
+          error: 'Parcel not found' 
+        });
+      });
+
+
+
+    })
+
 });
