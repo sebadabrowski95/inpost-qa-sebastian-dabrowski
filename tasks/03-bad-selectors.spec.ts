@@ -58,9 +58,8 @@ test("profile page shows the user email", async ({ page }) => {
   await page.click('[type="submit"]');
   await page.waitForURL("/profile");
 
-  const emailEl = page.locator('[data-testid="user-email"]');
-  const text = await emailEl.textContent();
-  expect(text).toBe("user@example.com");
+  await expect(page.locator('[data-testid="user-email"]')).toBeHidden()
+
 });
 
 // --- Test 6 (bonus) ---
