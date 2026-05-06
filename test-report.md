@@ -34,7 +34,7 @@
 
 **[Medium]** The forgotten password scenario is not supported.
 
-**[Low]** No error message is displayed after an unsuccessful login attempt.
+**[Medium]** The system fails to display a validation error message when a user enters a string that does not follow the standard email format (e.g., missing '@' or '.' symbols).
 
 **[Low]** The naming is inconsistent. This view uses both "Log in" in the navigation bar and "Sign In" on the page. In addition, "In" is capitalized, which is inconsistent with "Sign up here". The naming and capitalization should be aligned.
 
