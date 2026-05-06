@@ -25,7 +25,19 @@ test("newsletter success message appears after submit", async ({ page }) => {
 
 // --- Test 3 ---
 test("GET /api/parcels/:id returns the created parcel", async ({ request }) => {
-  const res = await request.get("/api/parcels/abc-1234");
+   const createResponse  = await request.post(`/api/parcels`, {
+      headers:{ Authorization: `Bearer test-token-inpost-2026` },
+      data: {
+        recipientName: "Jan Kowalski",
+        recipientEmail: "jan@example.com",
+        size: "A",
+        deliveryType: "LOCKER",
+        lockerCode: "KRK001",
+      },
+    });
+  const createdParcel = await createResponse.json();
+ 
+  const res = await request.get(`/api/parcels/${createdParcel.id}`);
   expect(res.status()).toBe(200);
   const body = await res.json();
   expect(body).toHaveProperty("id");
