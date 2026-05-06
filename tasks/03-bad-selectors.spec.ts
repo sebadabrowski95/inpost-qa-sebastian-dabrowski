@@ -67,4 +67,5 @@ test("newsletter form submits without error", async ({ page }) => {
   await page.goto("/");
   await page.fill('[data-testid="newsletter-input"]', "test@example.com");
   await page.click('[data-testid="newsletter-submit"]');
+  await expect(page.locator('.error-message')).not.toBeVisible();
 });
