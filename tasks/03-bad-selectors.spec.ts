@@ -18,7 +18,6 @@ test("newsletter success message appears after submit", async ({ page }) => {
   await page.goto("/");
   await page.fill('[data-testid="newsletter-input"]', "test@example.com");
   await page.click('[data-testid="newsletter-submit"]');
-  await page.waitForTimeout(3000);
   await expect(
     page.locator('[data-testid="newsletter-success"]'),
   ).toBeVisible();
