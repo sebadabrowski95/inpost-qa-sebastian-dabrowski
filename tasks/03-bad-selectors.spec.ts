@@ -9,7 +9,7 @@ import { test, expect } from "@playwright/test";
 // --- Test 1 ---
 test("home page shows the correct hero heading", async ({ page }) => {
   await page.goto("/");
-  const heading = page.locator("section:nth-child(1) h1:nth-child(2)");
+  const heading = page.getByRole('heading', { level: 1 });
   await expect(heading).toBeVisible();
 });
 
